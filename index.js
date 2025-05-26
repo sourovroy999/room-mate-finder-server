@@ -60,6 +60,20 @@ async function run() {
     })
 
 
+    //4.get data by email
+
+    app.get('/mylisting/:email',async(req,res)=>{
+        const email=req.params.email;
+        console.log(email);
+        
+        const filter={email:email};
+        const cursor=roomCollection.find(filter);
+
+        const result=await cursor.toArray();
+        res.send(result)
+    })
+
+
 
 
 
