@@ -11,9 +11,9 @@ app.use(cors())
 app.use(express.json())
 
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.iy6spfv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.iy6spfv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
-// const uri="mongodb://localhost:27017"
+const uri="mongodb://localhost:27017"
 
 
 
@@ -71,6 +71,29 @@ async function run() {
 
         const result=await cursor.toArray();
         res.send(result)
+    })
+
+    //delete a data
+
+    app.delete('/useraddedroom/:id',async(req,res)=>{
+        const id=req.params.id;
+        const query={_id: new ObjectId(id)}
+        const result=await roomCollection.deleteOne(query)
+        res.send(result)
+    })
+
+    //update room details
+    app.put('/useraddedroom/:id', async(req,res)=>{
+      const id=req.params.id;
+      const filter={_id: new ObjectId(id)}
+      const options={upsert: true};
+      const updatedRoom=req.body;
+      const updatedDoc={
+        $set:updatedRoom
+      }
+
+      const result=await roomCollection.updateOne(filter,updatedDoc,options)
+      res.send(result)
     })
 
 
