@@ -51,6 +51,13 @@ async function run() {
         res.send(result)
     })
 
+    //get availiable data with limit operator
+    app.get('/useraddedroom/availiable',async(req,res)=>{
+      const cursor=roomCollection.find({availiability:"Yes"}).limit(6)
+      const result=await cursor.toArray();
+      res.send(result)
+    })
+
     //3.get data by id
     app.get('/useraddedroom/:id',async(req,res)=>{
         const id=req.params.id;
