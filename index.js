@@ -11,9 +11,9 @@ app.use(cors())
 app.use(express.json())
 
 
-// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.iy6spfv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.iy6spfv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
-const uri="mongodb://localhost:27017"
+// const uri="mongodb://localhost:27017"
 
 
 
@@ -102,6 +102,24 @@ async function run() {
       const result=await roomCollection.updateOne(filter,updatedDoc,options)
       res.send(result)
     })
+
+    // //update like btn
+    // app.put('/useraddedroom/:id',async(req,res)=>{
+    //   const id=req.params.id;
+    //   const room=req.body;
+
+    //   const filter={_id: new ObjectId(id)}
+    //   const options={upsert: true}
+    //   const updateRoom={
+    //     $set:{
+    //       totaluserlike:room.totalLike
+    //     }
+    //   }
+
+    //   const result=await roomCollection.updateOne(filter,updateRoom,options)
+
+    //   res.send(result)
+    // })
 
 
 
