@@ -7,7 +7,28 @@ const cors = require('cors');
 const app=express();
 const port=process.env.PORT || 5000;
 
-app.use(cors())
+// // Define allowed origins based on environment
+const allowedOrigins = [
+  'https://room-mate-finder-auth-d2af4.web.app', // Production
+];
+
+// // Add development origins if not in production
+if (process.env.NODE_ENV !== 'production') {
+  allowedOrigins.push(
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'http://localhost:5000'
+  );
+}
+
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true
+}));
+
+// app.use(cors())
+
 app.use(express.json())
 
 
@@ -147,3 +168,5 @@ app.listen(port, ()=>{
     console.log(`room mate server is running on port: ${port}`);
     
 })
+
+module.exports = app;
